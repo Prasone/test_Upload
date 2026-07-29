@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GreenNode — Plant Monitor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="noise"></div>
+
+  <header>
+    <div class="logo">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">GreenNode</span>
+    </div>
+    <div class="status-bar">
+      <span class="dot" id="statusDot"></span>
+      <span id="statusText">Menghubungkan...</span>
+      <span class="timestamp" id="lastUpdate">—</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- Sensor Cards -->
+    <section class="sensor-grid">
+
+      <div class="card card--temp" data-index="0">
+        <div class="card-label">Suhu</div>
+        <div class="card-value">
+          <span id="tempVal">—</span>
+          <span class="unit">°C</span>
+        </div>
+        <div class="card-bar-track">
+          <div class="card-bar" id="tempBar"></div>
+        </div>
+        <div class="card-icon">🌡</div>
+      </div>
+
+      <div class="card card--hum" data-index="1">
+        <div class="card-label">Kelembaban Udara</div>
+        <div class="card-value">
+          <span id="humVal">—</span>
+          <span class="unit">%</span>
+        </div>
+        <div class="card-bar-track">
+          <div class="card-bar" id="humBar"></div>
+        </div>
+        <div class="card-icon">💧</div>
+      </div>
+
+      <div class="card card--soil" data-index="2">
+        <div class="card-label">Kelembaban Tanah</div>
+        <div class="card-value">
+          <span id="soilVal">—</span>
+          <span class="unit">%</span>
+        </div>
+        <div class="card-bar-track">
+          <div class="card-bar" id="soilBar"></div>
+        </div>
+        <div class="card-icon">🌱</div>
+      </div>
+
+    </section>
+
+    <!-- Control Panel -->
+    <section class="control-panel">
+      <h2 class="panel-title">Kontrol Aktuator</h2>
+
+      <div class="actuator-grid">
+
+        <div class="actuator-card" id="pumpCard">
+          <div class="act-top">
+            <div class="act-icon">💧</div>
+            <div class="act-info">
+              <div class="act-name">Pompa Air</div>
+              <div class="act-sub">Irigasi otomatis</div>
+            </div>
+          </div>
+          <div class="toggle-wrap">
+            <span class="toggle-label" id="pumpLabel">OFF</span>
+            <label class="toggle">
+              <input type="checkbox" id="pumpToggle" onchange="controlRelay('pump', this.checked)" />
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="actuator-card" id="fanCard">
+          <div class="act-top">
+            <div class="act-icon">🌬️</div>
+            <div class="act-info">
+              <div class="act-name">Kipas / Fan</div>
+              <div class="act-sub">Sirkulasi udara</div>
+            </div>
+          </div>
+          <div class="toggle-wrap">
+            <span class="toggle-label" id="fanLabel">OFF</span>
+            <label class="toggle">
+              <input type="checkbox" id="fanToggle" onchange="controlRelay('fan', this.checked)" />
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Chart Section -->
+    <section class="chart-section">
+      <h2 class="panel-title">Riwayat Sensor <span class="chart-note">(20 data terakhir)</span></h2>
+      <div class="chart-legend">
+        <span class="leg-item"><span class="leg-dot" style="background:var(--c-temp)"></span>Suhu</span>
+        <span class="leg-item"><span class="leg-dot" style="background:var(--c-hum)"></span>Kelembaban Udara</span>
+        <span class="leg-item"><span class="leg-dot" style="background:var(--c-soil)"></span>Kelembaban Tanah</span>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="historyChart"></canvas>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>GreenNode IoT Dashboard</span>
+    <span>ESP32 • DHT22 • Soil Sensor</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
